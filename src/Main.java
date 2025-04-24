@@ -10,11 +10,49 @@ public class Main {
     */
  public static int[] generate(int low, int high, int size){
      int[]result =new int[size];
+        for (int i = 0; i < size; i++) {
+            result[i] = (int) (Math.random() * (high - low + 1)) + low;
+        }
+
      return result;
  }
   public static void mergesort(int[] a,int low, int high ){
+        if (low < high) {
+            int mid = (low + high) / 2;
+            mergesort(a, low, mid);
+            mergesort(a, mid + 1, high);
+            merge(a, low, mid, high);
+        }
+
 
   }
+  private static void merge(int[] a, int low, int mid, int high) {
+        int[] temp = new int[high - low + 1];
+        int i = low;
+        int j = mid + 1;
+        int k = 0;
+
+        while (i <= mid && j <= high) {
+            if (a[i] <= a[j]) {
+                temp[k++] = a[i++];
+            } else {
+                temp[k++] = a[j++];
+            }
+        }
+         while (i <= mid) {
+            temp[k++] = a[i++];
+        }
+
+        while (j <= high) {
+            temp[k++] = a[j++];
+        }
+
+        for (k = 0; k < temp.length; k++) {
+            a[low + k] = temp[k];
+        }
+    }
+
+
   public static void display(int[]a){
      for(int x: a){
          System.out.print(x );
